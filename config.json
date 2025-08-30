@@ -1,0 +1,25 @@
+{
+  "support": "support@example.com",
+  "services": [
+    {
+      "name": "Example",
+      "url": "https://example.com"
+    },
+    {
+      "name": "Example Org",
+      "url": "https://example.org"
+    },
+    {
+      "name": "Example Net",
+      "url": "https://example.net"
+    },
+    {
+      "name": "IANA Reserved",
+      "url": "https://iana.org"
+    },
+    {
+      "name": "W3C",
+      "url": "https://w3.org"
+    }
+  ]
+}

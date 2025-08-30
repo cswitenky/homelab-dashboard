@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <!--
+    Modified from the Apache2 Ubuntu original for Service Dashboard
+    Last updated: 2025-07-22
+  -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Home Lab Service Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="main_page">
+      <div class="page_header">
+        <span> Home Lab Service Dashboard </span>
+      </div>
+
+      <div class="content_section floating_element">
+        <div class="section_header section_header_red">
+          <div id="about"></div>
+          About This Dashboard
+        </div>
+        <div class="content_section_text">
+          <p>
+            Welcome to our home lab service dashboard! This page gives you
+            access to all the digital services running on our home network. It's
+            like a central hub that organizes all our self-hosted applications
+            in one place.
+          </p>
+
+          <p>
+            If you're seeing this page, everything is working correctly. I
+            recommend
+            <b>bookmarking this page</b> so you can easily find all our home
+            services in one place.
+          </p>
+
+          <p>
+            If you're not sure what something does, feel free to ask me! If
+            anything isn't working, let me know and I'll fix it.
+          </p>
+        </div>
+
+        <div class="section_header">
+          <div id="services"></div>
+          Available Services
+        </div>
+        <div class="content_section_text">
+          <p>
+            The following services are configured and available on our home lab
+            environment. You can access all of your self-hosted applications
+            from this dashboard:
+          </p>
+
+          <div class="services-grid">
+            <script>
+              let services = [];
+
+              function createServiceLink(service) {
+                return `
+                        <a href="${service.url}" class="service_link_wrapper">
+                            <div class="service_link">
+                                <div class="service_content">
+                                    <img src="${service.url}/favicon.ico" 
+                                             alt="favicon" 
+                                             class="favicon" 
+                                             onerror="this.style.display='none'" />
+                                    <div class="service_info">
+                                        <div class="service_name">${
+                                          service?.name || ""
+                                        }</div>
+                                        <div class="service_url">${
+                                          service.url
+                                        }</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+              }
+
+              function renderServices(services) {
+                const grid = document.querySelector(".services-grid");
+                if (!services || services.length === 0) {
+                  grid.innerHTML = `<div class="no-services" style="color: red; text-align:center;"><b>No services are currently available.</b></div>`;
+                } else {
+                  grid.innerHTML = services.map(createServiceLink).join("");
+                }
+              }
+
+              fetch("config.json")
+                .then((response) => response.json())
+                .then((data) => {
+                  services = data.services;
+                  renderServices(services);
+                })
+                .catch((error) => {
+                  console.error("Error loading services.json:", error);
+                  renderServices([]);
+                });
+
+              document.addEventListener("DOMContentLoaded", function () {
+                renderServices(services);
+              });
+            </script>
+          </div>
+        </div>
+
+        <div id="support-section" style="display: none">
+          <div class="section_header">
+            <div id="support"></div>
+            Support Information
+          </div>
+          <div class="content_section_text" id="support-info">
+            <p>
+              If you encounter problems with the dashboard itself or need to add
+              new services, email: <a id="support-email" href="#">Loading...</a>
+            </p>
+          </div>
+        </div>
+        <script>
+          fetch("config.json")
+            .then((response) => response.json())
+            .then((data) => {
+              const email = data.support;
+              if (email) {
+                const emailLink = document.getElementById("support-email");
+                emailLink.textContent = email;
+                emailLink.href = `mailto:${email}`;
+                document.getElementById("support-section").style.display = "";
+              }
+            })
+            .catch(() => {
+              // Do not show support section if unavailable
+            });
+        </script>
+      </div>
+    </div>
+    <div class="validator">
+      <p>Home Lab Service Dashboard | Generated automatically</p>
+    </div>
+  </body>
+</html>
