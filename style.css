@@ -163,7 +163,8 @@ div.content_section_text a:active {
 
 div.content_section_text a:hover {
   background-color: #000000;
-  color: #dcdfe6;
+  color: #ffffff;
+  transition: all 0.05s ease;
 }
 
 div.validator {
@@ -216,7 +217,7 @@ div.validator {
   display: block;
   margin-bottom: 8px;
   color: #000000;
-  transition: all 0.2s ease;
+  transition: all 0.05s ease;
 }
 
 .service_link_wrapper:hover .service_name {
