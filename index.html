@@ -22,22 +22,19 @@
         </div>
         <div class="content_section_text">
           <p>
-            Welcome to our home lab service dashboard! This page gives you
-            access to all the digital services running on our home network. It's
-            like a central hub that organizes all our self-hosted applications
-            in one place.
+            Welcome to the home dashboard! This page provides quick access to
+            all available services and applications. Think of it as your central
+            hub for everything running on the network.
           </p>
 
           <p>
-            If you're seeing this page, everything is working correctly. I
-            recommend
-            <b>bookmarking this page</b> so you can easily find all our home
-            services in one place.
+            Everything is working correctly if you can see this page. Feel free
+            to <b>bookmark this page</b> for easy access to all services.
           </p>
 
           <p>
-            If you're not sure what something does, feel free to ask me! If
-            anything isn't working, let me know and I'll fix it.
+            Questions about a service? Just ask! If something isn't working,
+            let me know and I'll take care of it.
           </p>
         </div>
 
@@ -47,31 +44,38 @@
         </div>
         <div class="content_section_text">
           <p>
-            The following services are configured and available on our home lab
-            environment. You can access all of your self-hosted applications
-            from this dashboard:
+            Browse and access all self-hosted applications running in our home lab:
           </p>
 
           <div class="services-grid">
+            <div class="loading" style="text-align:center; color: #5a6b8c;">
+              Loading services...
+            </div>
             <script>
               let services = [];
+              let isLoaded = false;
 
               function createServiceLink(service) {
                 return `
                         <a href="${service.url}" class="service_link_wrapper">
                             <div class="service_link">
                                 <div class="service_content">
+                                  <!-- 
                                     <img src="${service.url}/favicon.ico" 
                                              alt="favicon" 
                                              class="favicon" 
-                                             onerror="this.style.display='none'" />
+                                             onerror="this.style.display='none'" /> -->
                                     <div class="service_info">
-                                        <div class="service_name">${
-                                          service?.name || ""
-                                        }</div>
-                                        <div class="service_url">${
-                                          service.url
-                                        }</div>
+                                        ${
+                                          service?.name
+                                            ? `<div class="service_name">${service.name}</div>`
+                                            : ""
+                                        }
+                                        ${
+                                          service.description
+                                            ? `<div class="service_description">${service.description}</div>`
+                                            : ""
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -81,6 +85,8 @@
 
               function renderServices(services) {
                 const grid = document.querySelector(".services-grid");
+                isLoaded = true;
+                
                 if (!services || services.length === 0) {
                   grid.innerHTML = `<div class="no-services" style="color: red; text-align:center;"><b>No services are currently available.</b></div>`;
                 } else {
@@ -98,10 +104,6 @@
                   console.error("Error loading services.json:", error);
                   renderServices([]);
                 });
-
-              document.addEventListener("DOMContentLoaded", function () {
-                renderServices(services);
-              });
             </script>
           </div>
         </div>

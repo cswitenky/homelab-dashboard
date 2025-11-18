@@ -3,23 +3,28 @@
   "services": [
     {
       "name": "Example",
-      "url": "https://example.com"
+      "url": "https://example.com",
+      "description": "Primary documentation and demo service"
     },
     {
       "name": "Example Org",
-      "url": "https://example.org"
+      "url": "https://example.org",
+      "description": "Community resources and organization portal"
     },
     {
       "name": "Example Net",
-      "url": "https://example.net"
+      "url": "https://example.net",
+      "description": "Network monitoring and diagnostic tools"
     },
     {
       "name": "IANA Reserved",
-      "url": "https://iana.org"
+      "url": "https://iana.org",
+      "description": "Internet protocol standards and registry"
     },
     {
       "name": "W3C",
-      "url": "https://w3.org"
+      "url": "https://w3.org",
+      "description": "Web standards and technical specifications"
     }
   ]
 }

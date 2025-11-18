@@ -14,6 +14,58 @@ _Design inspired by the classic Apache2 default landing page._
 
 ## Getting Started
 
+### Option 1: Docker (Recommended)
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/cswitenky/homelab-dashboard.git
+   cd homelab-dashboard
+   ```
+
+2. **Edit your config.json:**
+
+   - Modify `config.json` with your services:
+     ```json
+     {
+       "support": "support@example.com",
+       "services": [
+         {
+           "name": "Plex",
+           "url": "https://plex.example.com"
+         },
+         {
+           "name": "Home Assistant",
+           "url": "https://homeassistant.example.com"
+         }
+       ]
+     }
+     ```
+
+3. **Run with Docker Compose:**
+
+   ```sh
+   docker-compose up -d
+   ```
+
+   The dashboard will be available at http://localhost:8080
+
+4. **Or run with Docker directly:**
+
+   ```sh
+   # Build the image
+   docker build -t homelab-dashboard .
+
+   # Run the container with your config.json mounted
+   docker run -d \
+     -p 8080:80 \
+     -v $(pwd)/config.json:/usr/share/nginx/html/config.json:ro \
+     --name homelab-dashboard \
+     homelab-dashboard
+   ```
+
+### Option 2: Static Hosting
+
 1. **Clone the repository:**
 
    ```sh
@@ -25,35 +77,41 @@ _Design inspired by the classic Apache2 default landing page._
    - Edit `config.json` and add your service entries. You may also include an optional `support` field for admin contact:
      ```json
      {
-       "support": "support@example.com", // optional admin info
+       "support": "support@example.com",
        "services": [
          {
            "name": "Example",
            "url": "https://example.com"
-         },
-         {
-           "name": "Example Org",
-           "url": "https://example.org"
-         },
-         {
-           "name": "Example Net",
-           "url": "https://example.net"
-         },
-         {
-           "name": "IANA Reserved",
-           "url": "https://iana.org"
-         },
-         {
-           "name": "W3C",
-           "url": "https://w3.org"
          }
        ]
      }
      ```
 
 3. **Open the dashboard:**
-   - Open `index.html` in your browser.
+   - Open `index.html` in your browser, or deploy to any static web server.
+
+## Docker Configuration
+
+The Docker setup uses nginx to serve the static files. The `config.json` file is mounted as a volume, allowing you to update your services without rebuilding the container.
+
+### Environment Variables
+
+The container exposes port 80. You can map it to any host port:
+
+```sh
+docker run -d -p 3000:80 -v $(pwd)/config.json:/usr/share/nginx/html/config.json:ro homelab-dashboard
+```
+
+### Updating Services
+
+To update your services, simply edit `config.json` and refresh your browser. No container restart required!
 
 ## Deployment
 
+### GitHub Pages
+
 This project includes a GitHub Actions workflow (`.github/workflows/static.yml`) for automatic deployment to GitHub Pages.
+
+### Docker Hub
+
+You can also push the image to Docker Hub for easy deployment across your infrastructure.
