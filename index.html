@@ -60,11 +60,14 @@
                         <a href="${service.url}" class="service_link_wrapper">
                             <div class="service_link">
                                 <div class="service_content">
-                                  <!-- 
-                                    <img src="${service.url}/favicon.ico" 
+                                    ${
+                                      service.icon && service.url
+                                        ? `<img src="${service.url}${service.icon}" 
                                              alt="favicon" 
                                              class="favicon" 
-                                             onerror="this.style.display='none'" /> -->
+                                             onerror="this.style.display='none'" />`
+                                        : ""
+                                    }
                                     <div class="service_info">
                                         ${
                                           service?.name
